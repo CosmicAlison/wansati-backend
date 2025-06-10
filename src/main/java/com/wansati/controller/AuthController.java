@@ -1,4 +1,4 @@
-package com.controller;
+package com.wansati.controller;
 
 import com.wansati.model.User;
 import com.wansati.repository.UserRepository;
