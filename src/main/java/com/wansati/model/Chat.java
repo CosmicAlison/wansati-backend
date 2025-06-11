@@ -9,6 +9,8 @@ import jakarta.persistence.*;
 @Entity
 @Builder
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Setter
 public class Chat {
     public enum ChatType {
@@ -22,7 +24,15 @@ public class Chat {
     private Instant sentAt = Instant.now();
     @Enumerated(EnumType.STRING)
     private ChatType type; 
+
+    @ManyToMany
+    @JoinTable(
+        name = "chat_users",
+        joinColumns = @JoinColumn(name = "chat_id"),
+        inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
     List<User> members;
+
     @Builder.Default
     private String name = "Chat";
     

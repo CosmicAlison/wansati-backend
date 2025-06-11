@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/swipes")
+@RequestMapping("/api/swipe")
 public class SwipeController {
 
     private final SwipeService swipeService;
