@@ -10,12 +10,7 @@ import jakarta.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Message {
-
-    public enum ChatType {
-        GROUP,
-        PRIVATE
-    }
+public class Message{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,11 +23,10 @@ public class Message {
     @JoinColumn(name = "sender_id", nullable = false)
     private User sender;
 
-    @ManyToOne
-    @JoinColumn(name = "receiver_id", nullable = false)
-    private User receiver; 
     private String content;
 
-    @Enumerated(EnumType.STRING)
-    private ChatType type; 
+    @ManyToOne
+    @JoinColumn(name = "chat_id", nullable = true)
+    private Chat chat;
+
 }
