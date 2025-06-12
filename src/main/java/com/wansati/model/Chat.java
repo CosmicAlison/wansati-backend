@@ -35,5 +35,9 @@ public class Chat {
 
     @Builder.Default
     private String name = "Chat";
-    
+
+    @OneToOne
+    @JoinColumn(name = "last_message_id")
+    private Message lastMessage;
+  
 }
