@@ -45,4 +45,34 @@ public class AuthController {
         userRepository.save(newUser);
         return "User registered successfully!";
     }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteUser(@PathVariable Long id) {
+        if (!userRepository.existsById(id)) {
+            return "User not found.";
+        }
+        userRepository.deleteById(id);
+        return "User deleted successfully.";
+    }
+
+    @PutMapping("/update/{id}")
+    public String updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
+        return userRepository.findById(id).map(user -> {
+            user.setName(updatedUser.getName());
+            user.setBio(updatedUser.getBio());
+            user.setLocation(updatedUser.getLocation());
+            user.setProfileUrl(updatedUser.getProfileUrl());
+            user.setInterests(updatedUser.getInterests());
+            user.setCertifications(updatedUser.getCertifications());
+            user.setSkills(updatedUser.getSkills());
+            user.setEducationHistory(updatedUser.getEducationHistory());
+            user.setEmploymentHistory(updatedUser.getEmploymentHistory()); 
+            user.setUsername(updatedUser.getUsername()); 
+            userRepository.save(user);
+            return "User updated successfully!";
+        }).orElse("User not found.");
+    }
+
+
+
 }
