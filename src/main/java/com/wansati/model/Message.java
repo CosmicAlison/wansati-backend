@@ -28,5 +28,4 @@ public class Message{
     @ManyToOne
     @JoinColumn(name = "chat_id", nullable = true)
     private Chat chat;
-
 }

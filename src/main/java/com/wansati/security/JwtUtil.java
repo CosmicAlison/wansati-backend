@@ -24,8 +24,13 @@ public class JwtUtil {
 
     @PostConstruct
     public void init() {
-        byte[] keyBytes = Decoders.BASE64.decode(secret);
-        key = Keys.hmacShaKeyFor(keyBytes);
+        try {
+            byte[] keyBytes = Decoders.BASE64.decode(secret);
+            key = Keys.hmacShaKeyFor(keyBytes);
+        } catch (Exception e) {
+            System.err.println("Error decoding JWT secret: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public String generateToken(String username) {
@@ -38,8 +43,6 @@ public class JwtUtil {
     }
 
     public String extractUsername(String token) {
-        byte[] keyBytes = Decoders.BASE64.decode(secret);
-        Key key = Keys.hmacShaKeyFor(keyBytes);
         return Jwts.parserBuilder()
         .setSigningKey(key)
         .build()

@@ -18,6 +18,10 @@ import com.wansati.repository.ChatRepository;
 import com.wansati.repository.MessageRepository;
 import com.wansati.service.MessageService;
 
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -27,6 +31,7 @@ public class MessageController {
     private final ChatRepository chatRepository;
     private final MessageRepository messageRepository;
     private final MessageService messageService;
+    private final SimpMessagingTemplate messagingTemplate;
 
     @GetMapping("/{chatId}")
     public ResponseEntity<List<Message>> getChatMessages(@PathVariable Long chatId) {
@@ -37,15 +42,14 @@ public class MessageController {
         return ResponseEntity.ok(messages);
     }
 
-    @PostMapping
-    public ResponseEntity<Message> sendMessage(@RequestBody SendMessageRequest request) {
+    @MessageMapping("/chat.sendMessage")
+    public void sendMessage(@Payload SendMessageRequest request) {
         Message saved = messageService.sendMessage(
             request.getChatId(),
             request.getSenderId(),
             request.getContent()
         );
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+        messagingTemplate.convertAndSend("/topic/" + request.getChatId(), saved);
     }
-
 }
 

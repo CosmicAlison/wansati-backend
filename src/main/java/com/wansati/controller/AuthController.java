@@ -72,7 +72,4 @@ public class AuthController {
             return "User updated successfully!";
         }).orElse("User not found.");
     }
-
-
-
 }
