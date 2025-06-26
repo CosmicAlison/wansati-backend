@@ -23,7 +23,7 @@ Wansati is a women-first professional networking and mentorship platform designe
 ## Technology Stack
 
 * **Backend:** Spring Boot, PostgreSQL, Spring Security, STOMP/WebSockets
-* **Frontend:** (In progress) React Native or Flutter (planned)
+* **Frontend:** (In progress) Next.js
 * **Authentication:** JWT-based security with role-based access controls
 * **Real-Time Communication:** STOMP over WebSockets for chat features
 * **Database:** PostgreSQL relational schema for user profiles, matches, skills, and more
